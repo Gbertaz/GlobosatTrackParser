@@ -55,7 +55,7 @@ It also calculates and display the following statistics:
 
 Output example:
 
-![Output](https://github.com/Gbertaz/GlobosatTrackParser/blob/master/images/output.png)
+![Output](https://github.com/Gbertaz/GlobosatTrackParser/blob/master/images/output.PNG)
 
 **It might be useful to understand where a fix has been lost, uncommenting the two lines of code in FixCounter.cs lines 52 and 53 will output the GPS fix that follows the lost one**
 
