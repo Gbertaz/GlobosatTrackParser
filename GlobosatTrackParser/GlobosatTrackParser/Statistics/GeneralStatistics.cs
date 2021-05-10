@@ -125,27 +125,27 @@ namespace GlobosatTrackParser.Statistics
             }
         }
 
-
-        public void PrintResult()
+        public override string ToString()
         {
-            _fixCounter.PrintResult();
-            Console.WriteLine("");
-            Console.WriteLine(
-                "Speed MAX:\t\t{0} Km/h\n" +
-                "Speed MIN:\t\t{1} Km/h\n" +
-                "Speed AVG:\t\t{2} Km/h\n" +
-                "Altitude MAX:\t\t{3} meters\n" +
-                "Altitude MIN:\t\t{4} meters\n" +
-                "Temperature MAX:\t{5} °C\n" +
-                "Temperature MIN:\t{6} °C\n" +
-                "Temperature AVG:\t{7} °C\n" +
-                "Heart rate MAX:\t\t{8} bpm\n" +
-                "Heart rate MIN:\t\t{9} bpm\n" +
-                "Heart rate AVG:\t\t{10} bpm\n" +
-                "Time total:\t\t{11}\n" +
-                "Time moving:\t\t{12}\n" +
-                "Distance:\t\t{13} Km\n",
-
+            return string.Format(
+                "Total GPS fixes:\t{0}" + NewLine() +
+                "Lost GPS fixes:\t\t{1}" + NewLine() +
+                "Speed MAX:\t\t{2} Km/h" + NewLine() +
+                "Speed MIN:\t\t{3} Km/h" + NewLine() +
+                "Speed AVG:\t\t{4} Km/h" + NewLine() +
+                "Altitude MAX:\t\t{5} meters" + NewLine() +
+                "Altitude MIN:\t\t{6} meters" + NewLine() +
+                "Temperature MAX:\t{7} °C" + NewLine() +
+                "Temperature MIN:\t{8} °C" + NewLine() +
+                "Temperature AVG:\t{9} °C" + NewLine() +
+                "Heart rate MAX:\t\t{10} bpm" + NewLine() +
+                "Heart rate MIN:\t\t{11} bpm" + NewLine() +
+                "Heart rate AVG:\t\t{12} bpm" + NewLine() +
+                "Time total:\t\t{13}" + NewLine() +
+                "Time moving:\t\t{14}" + NewLine() +
+                "Distance:\t\t{15} Km" + NewLine(),
+                _fixCounter.FixesTotalNumber,
+                _fixCounter.FixesLostNumber,
                 MaxSpeed.ToString("0.0"),
                 MinSpeed.ToString("0.0"),
                 AverageSpeed.ToString("0.0"),
@@ -161,6 +161,8 @@ namespace GlobosatTrackParser.Statistics
                 FormatTime(TotalTripTime),
                 TotalTripDistance.ToString("0.0"));
         }
+
+        private string NewLine() { return Environment.NewLine; }
 
         private string FormatTime(TimeSpan time)
         {

@@ -91,10 +91,5 @@ namespace GlobosatTrackParser.Statistics
                 currFixTime.Seconds == prevFixTime.Seconds);
         }
 
-        public void PrintResult()
-        {
-            Console.WriteLine("\nTotal GPS fixes: {0}\tLost GPS fixes: {1}", FixesTotalNumber, FixesLostNumber);
-        }
-
     }
 }

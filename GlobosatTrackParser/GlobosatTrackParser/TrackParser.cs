@@ -51,22 +51,17 @@ namespace GlobosatTrackParser
 
             _gpsFixes = new List<Models.GpsFix>();
             _generalStats = new Statistics.GeneralStatistics(gpsUpdateRate);
-            _generalStats.Reset();
-
-            //Parse the input file and write the output
-            ParseInputFile();
-            WriteOutputFile();
-
-            //accelTimeCalc.PrintResult();
-            _generalStats.PrintResult();
         }
 
 
         /// <summary>
         /// Reads the input file line by line
         /// </summary>
-        private void ParseInputFile()
+        public void ParseFile()
         {
+            _gpsFixes.Clear();
+            _generalStats.Reset();
+
             const Int32 bufferSize = 128;
             using (var fileStream = File.OpenRead(_inputFilePath))
             {
@@ -90,18 +85,23 @@ namespace GlobosatTrackParser
                 }
                 fileStream.Close();
             }
+
+            WriteOutput();
         }
 
         /// <summary>
         /// Writes the processed data to the output file
         /// </summary>
-        private void WriteOutputFile()
+        private void WriteOutput()
         {
             try
             {
                 string outputFilePath = Path.Combine(Path.GetDirectoryName(_inputFilePath),
                 Path.GetFileNameWithoutExtension(_inputFilePath) + "_out" + Path.GetExtension(_inputFilePath));
                 FileStream outputStream = File.OpenWrite(outputFilePath);
+
+                //Writes the statistics
+                WriteToFile(outputStream, _generalStats.ToString());
 
                 //Writes the header
                 string header = string.Join(SEPARATOR.ToString(), _headerColumns);
@@ -230,6 +230,15 @@ namespace GlobosatTrackParser
             currentFix.TripTime = _generalStats.TotalTripTime;
 
             _gpsFixes.Add(currentFix);
+        }
+
+        /// <summary>
+        /// Returns the statistics object
+        /// </summary>
+        /// <returns></returns>
+        public Statistics.GeneralStatistics GetStats()
+        {
+            return _generalStats;
         }
 
     }

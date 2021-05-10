@@ -53,8 +53,12 @@ namespace GlobosatTrackParser
                 Console.ReadLine();
                 return;
             }
+            
+            TrackParser parser = new TrackParser(gpsFrequency, args[1]);
+            parser.ParseFile();
 
-            new TrackParser(gpsFrequency, args[1]);
+            //Prints the statistics
+            Console.WriteLine(parser.GetStats().ToString());
             Console.ReadLine();
         }
 
