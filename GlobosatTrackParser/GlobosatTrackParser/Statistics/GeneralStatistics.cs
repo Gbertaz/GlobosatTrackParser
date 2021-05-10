@@ -1,8 +1,26 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿// MIT License
+//
+// Copyright(c) 2021 Giovanni Bertazzoni <nottheworstdev@gmail.com>
+//
+// Permission is hereby granted, free of charge, to any person obtaining a copy
+// of this software and associated documentation files(the "Software"), to deal
+// in the Software without restriction, including without limitation the rights
+// to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+// copies of the Software, and to permit persons to whom the Software is
+// furnished to do so, subject to the following conditions :
+//
+// The above copyright notice and this permission notice shall be included in all
+// copies or substantial portions of the Software.
+//
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.IN NO EVENT SHALL THE
+// AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+// LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+// SOFTWARE.
+
+using System;
 
 namespace GlobosatTrackParser.Statistics
 {
@@ -26,14 +44,14 @@ namespace GlobosatTrackParser.Statistics
         public TimeSpan TotalTripTime { get; private set; }
         public double TotalTripDistance { get; private set; }
 
-        private FixCounter fixCounter;
+        private FixCounter _fixCounter;
         private int _gpsUpdateRate;
 
 
         public GeneralStatistics(int gpsUpdateRate)
         {
             _gpsUpdateRate = gpsUpdateRate;
-            fixCounter = new Statistics.FixCounter(gpsUpdateRate);
+            _fixCounter = new Statistics.FixCounter(gpsUpdateRate);
             Reset();
         }
 
@@ -78,7 +96,7 @@ namespace GlobosatTrackParser.Statistics
             if (fix.Temperature < MinTemperature) MinTemperature = fix.Temperature;
 
             //Total fixes and lost fixes counter
-            fixCounter.Update(fix);
+            _fixCounter.Update(fix);
 
             if (prevFix == null) return;
 
@@ -110,7 +128,7 @@ namespace GlobosatTrackParser.Statistics
 
         public void PrintResult()
         {
-            fixCounter.PrintResult();
+            _fixCounter.PrintResult();
             Console.WriteLine("");
             Console.WriteLine(
                 "Speed MAX:\t\t{0} Km/h\n" +
